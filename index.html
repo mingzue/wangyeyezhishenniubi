@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>English Vocabulary Notebook</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #container {
+            width: 400px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        #wordInput {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-bottom: 10px;
+        }
+
+        #wordList {
+            list-style: none;
+            padding: 0;
+        }
+
+        .wordItem {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+
+        .wordItem .word {
+            flex-grow: 1;
+        }
+
+        .wordItem .deleteButton {
+            color: red;
+            cursor: pointer;
+        }
+
+        .wordItem.emphasized {
+            background-color: #f0f8ff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>English Vocabulary Notebook</h1>
+        <input type="text" id="wordInput" placeholder="Enter a new word">
+        <ul id="wordList"></ul>
+    </div>
+
+    <script>
+        const wordInput = document.getElementById('wordInput');
+        const wordList = document.getElementById('wordList');
+
+        // Function to toggle emphasis on a word
+        function toggleEmphasis(li) {
+            li.classList.toggle('emphasized');
+        }
+
+        // Function to add a new word to the list
+        function addWordToList(word) {
+            const li = document.createElement('li');
+            li.className = 'wordItem';
+            li.innerHTML = `
+                <span class="word">${word}</span>
+                <span class="deleteButton">Delete</span>
+            `;
+            li.querySelector('.deleteButton').addEventListener('click', () => {
+                wordList.removeChild(li);
+            });
+            li.addEventListener('click', () => toggleEmphasis(li));
+
+            wordList.appendChild(li);
+            wordInput.value = ''; // Clear the input field
+        }
+
+        // Listen for Enter key press to add a word
+        wordInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                const word = wordInput.value.trim();
+                if (word !== '') {
+                    addWordToList(word);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+
